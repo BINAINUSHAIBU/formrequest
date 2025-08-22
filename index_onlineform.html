@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Online Tutor Request Form</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: #f2f7ff;
+        margin: 0;
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .form-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        width: 100%;
+      }
+      h2 {
+        text-align: center;
+        color: #222;
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+        display: block;
+        margin: 8px 0 4px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+        font-size: 15px;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      button {
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      .email-btn {
+        background: #0073e6;
+        color: white;
+      }
+      .whatsapp-btn {
+        background: #25d366;
+        color: white;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      /* Responsive design */
+      @media (max-width: 600px) {
+        body {
+          padding: 10px;
+        }
+        .form-container {
+          padding: 15px;
+        }
+        button {
+          font-size: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>📘 Online Tutor Request Form</h2>
+      <form id="tutorForm">
+        <label for="studentName">Full Name</label>
+        <input type="text" id="studentName" name="studentName" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="phone">Phone Number (WhatsApp preferred)</label>
+        <input type="tel" id="phone" name="phone" required />
+
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject" required>
+          <option value="">--Select Subject--</option>
+          <option value="Mathematics">Mathematics</option>
+          <option value="English">English</option>
+          <option value="Science">Science</option>
+          <option value="Computer / Coding">Computer / Coding</option>
+        </select>
+
+        <label for="topics">Specific Topics to Cover</label>
+        <textarea
+          id="topics"
+          name="topics"
+          rows="3"
+          placeholder="e.g. Algebra, Calculus, Probability..."
+          required
+        ></textarea>
+
+        <label for="days">Preferred Days</label>
+        <input
+          type="text"
+          id="days"
+          name="days"
+          placeholder="e.g. Mondays & Wednesdays"
+          required
+        />
+
+        <label for="time">Preferred Time</label>
+        <input
+          type="text"
+          id="time"
+          name="time"
+          placeholder="e.g. 4pm - 6pm"
+          required
+        />
+
+        <label for="duration">Lesson Duration</label>
+        <select id="duration" name="duration" required>
+          <option value="30">30 minutes</option>
+          <option value="60">1 hour</option>
+          <option value="90">1 hour 30 minutes</option>
+        </select>
+
+        <div class="buttons">
+          <button type="button" class="email-btn" onclick="sendToEmail()">
+            📧 Send via Email
+          </button>
+          <button type="button" class="whatsapp-btn" onclick="sendToWhatsApp()">
+            💬 Send via WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      function collectFormData() {
+        return {
+          name: document.getElementById("studentName").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          subject: document.getElementById("subject").value,
+          topics: document.getElementById("topics").value,
+          days: document.getElementById("days").value,
+          time: document.getElementById("time").value,
+          duration: document.getElementById("duration").value,
+        };
+      }
+
+      // Email submission (Formspree)
+      function sendToEmail() {
+        let form = document.getElementById("tutorForm");
+        form.action = "https://formspree.io/f/mvgqeron"; // Replace with your Formspree ID
+        form.method = "POST";
+        form.submit();
+      }
+
+      // WhatsApp submission
+      function sendToWhatsApp() {
+        let data = collectFormData();
+        let message = `Hello, I am ${data.name}. 
+I want online tutoring for ${data.subject}.
+Topics: ${data.topics}.
+Preferred Days: ${data.days}, Time: ${data.time}.
+Duration: ${data.duration} mins.
+Email: ${data.email}, Phone: ${data.phone}.`;
+
+        let phone = "2348144451557"; // Your WhatsApp number
+        let url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(url, "_blank");
+      }
+    </script>
+  </body>
+</html>
